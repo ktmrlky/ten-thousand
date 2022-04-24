@@ -20,7 +20,7 @@ const Home = () => {
 
   return (
     <Container>
-      <Row className="justify-content-md-center mt-2 mb-4">
+      <Row className="justify-content-md-center mt-2 mb-1">
         <Col md={2}>
           <div className="sticky-xl-top sticky-lg-top sticky-md-top sticky-sm-top mt-5 left-bar-progress">
             <h3>Progress</h3>
@@ -31,7 +31,7 @@ const Home = () => {
           <FormComponent />
           <Row>
             <Col>
-              <Button variant="light" size="lg" className="col-12">
+              <Button variant="outline-secondary" size="md" className="col-12">
                 <UpDouble />
               </Button>
             </Col>
@@ -60,7 +60,7 @@ const Home = () => {
           </Row>
           <Row>
             <Col>
-              <Button variant="light" size="lg" className="col-12">
+              <Button variant="outline-secondary" size="md" className="col-12">
                 <DownDouble />
               </Button>
             </Col>

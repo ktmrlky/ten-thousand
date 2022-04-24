@@ -5,13 +5,10 @@ const FormComponent = () => {
   return (
     <Form>
       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-        <Form.Label className="my-3">
-          Please write your 10.000 Hours Aim
-        </Form.Label>
         <Form.Control
           type="text"
-          placeholder="Be an expert on React..."
-          size="lg"
+          placeholder="Please write your 10.000 hours goal..."
+          size="md"
         />
       </Form.Group>
     </Form>
