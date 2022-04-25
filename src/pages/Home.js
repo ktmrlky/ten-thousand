@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Col, Container, ProgressBar, Row } from "react-bootstrap";
 import FormComponent from "../components/FormComponent";
 import DownDouble from "../assets/DownDouble";
 import UpDouble from "../assets/UpDouble";
 import CardComponentForTen from "../components/CardComponentForTen";
+import ModalComponent from "../components/ModalComponent";
 
 const Home = () => {
+  const [modalShow, setModalShow] = useState(false);
+
   const now = 60;
   const progressInstance = (
     <ProgressBar now={now} label={`${now}%`} variant="secondary" animated />
@@ -18,8 +21,13 @@ const Home = () => {
     return current;
   };
 
+  const handleModalClick = () => {
+    console.log("clicked");
+    setModalShow((modalShow) => !modalShow);
+  };
+
   return (
-    <Container>
+    <Container className="center">
       <Row className="justify-content-md-center mt-2 mb-1">
         <Col md={2}>
           <div className="sticky-xl-top sticky-lg-top sticky-md-top sticky-sm-top mt-5 left-bar-progress">
@@ -49,14 +57,24 @@ const Home = () => {
                 className="my-3"
                 key={idx}
               >
-                <CardComponentForTen day={setDate(idx - 9)} />
+                <CardComponentForTen
+                  day={setDate(idx - 9)}
+                  modalControl={handleModalClick}
+                />
               </Col>
             ))}
             {Array.from({ length: 9 }).map((_, idx) => (
               <Col md={3} className="my-3" key={idx}>
-                <CardComponentForTen day={setDate(idx + 1)} />
+                <CardComponentForTen
+                  day={setDate(idx + 1)}
+                  modalControl={handleModalClick}
+                />
               </Col>
             ))}
+            <ModalComponent
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+            />
           </Row>
           <Row>
             <Col>
