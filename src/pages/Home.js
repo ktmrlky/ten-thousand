@@ -26,7 +26,7 @@ const Home = () => {
   };
 
   return (
-    <Container className="center">
+    <Container>
       <Row className="justify-content-md-center mt-2 mb-1">
         <Col md={2}>
           <div className="sticky-xl-top sticky-lg-top sticky-md-top sticky-sm-top mt-5 left-bar-progress">
