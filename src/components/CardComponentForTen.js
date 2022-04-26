@@ -1,24 +1,10 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import { monthNames } from "../constants/MonthNames";
 
 const CardComponentForTen = ({ day, modalControl }) => {
   const now = new Date();
   const date = new Date(day);
-
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
 
   const controlPoint =
     date.getDate() === now.getDate() &&
@@ -26,7 +12,7 @@ const CardComponentForTen = ({ day, modalControl }) => {
     date.getFullYear() === now.getFullYear();
 
   return (
-    <div onClick={modalControl} style={{ cursor: "pointer" }}>
+    <div onClick={() => modalControl(date)} style={{ cursor: "pointer" }}>
       <Card
         bg={controlPoint ? "secondary" : "light"}
         text={controlPoint ? "light" : "secondary"}

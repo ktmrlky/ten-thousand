@@ -1,49 +1,37 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Form } from "react-bootstrap";
+import React from "react";
+import { Button, Form, InputGroup } from "react-bootstrap";
+import {
+  useGoalComponent,
+  useGoalUpdateComponent,
+} from "../contexts/GoalContext";
 
 const FormComponent = () => {
-  const last = useRef(false);
-  const [aim, setAim] = useState({
-    aim: "",
-    submitted: last.current,
-  });
-
-  useEffect(() => {
-    const input = JSON.parse(localStorage.getItem("aim"));
-    if (input) {
-      setAim(input);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (aim.submitted) {
-      localStorage.setItem("aim", JSON.stringify(aim));
-    }
-    // eslint-disable-next-line
-  }, [aim.submitted]);
-
-  const handleAim = (e) => {
-    e.preventDefault();
-    setAim({ ...aim, aim: e.target.value });
-  };
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    setAim({ ...aim, submitted: true });
-  }
+  const aim = useGoalComponent();
+  const handleGoal = useGoalUpdateComponent()[0];
+  const handleSubmit = useGoalUpdateComponent()[1];
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+      <InputGroup className="mb-3">
         <Form.Control
           type="text"
           placeholder="Please write your 10.000 hours goal..."
           size="md"
-          onChange={(e) => handleAim(e)}
-          value={aim.aim}
+          onChange={(e) => handleGoal(e)}
+          value={aim.goal}
           disabled={aim.submitted === false ? false : true}
+          aria-describedby="basic-addon2"
+          required
         />
-      </Form.Group>
+        <Button
+          variant="outline-secondary"
+          id="button-addon2"
+          disabled={aim.submitted === false ? false : true}
+          type="submit"
+        >
+          Set
+        </Button>
+      </InputGroup>
     </Form>
   );
 };
