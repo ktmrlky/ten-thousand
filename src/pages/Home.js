@@ -22,7 +22,6 @@ const Home = () => {
   };
 
   const handleModalClick = () => {
-    console.log("clicked");
     setModalShow((modalShow) => !modalShow);
   };
 

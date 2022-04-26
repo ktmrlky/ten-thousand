@@ -20,26 +20,27 @@ const CardComponentForTen = ({ day, modalControl }) => {
     "December",
   ];
 
+  const controlPoint =
+    date.getDate() === now.getDate() &&
+    date.getMonth() === now.getMonth() &&
+    date.getFullYear() === now.getFullYear();
+
   return (
     <div onClick={modalControl} style={{ cursor: "pointer" }}>
       <Card
-        bg={
-          now.getDate() === date.getDate() &&
-          now.getMonth() === date.getMonth() &&
-          now.getFullYear() === date.getFullYear()
-            ? "secondary"
-            : "light"
-        }
-        text={
-          now.getDate() === date.getDate() &&
-          now.getMonth() === date.getMonth() &&
-          now.getFullYear() === date.getFullYear()
-            ? "light"
-            : "secondary"
-        }
+        bg={controlPoint ? "secondary" : "light"}
+        text={controlPoint ? "light" : "secondary"}
       >
         <Card.Body className="m-auto">
           <Card.Title className="text-center">{date.getDate()}</Card.Title>
+          {controlPoint ? (
+            <div className="video__icon">
+              <div className="circle--outer"></div>
+              <div className="circle--inner"></div>
+            </div>
+          ) : (
+            ""
+          )}
           <Card.Text>{monthNames[date.getMonth()]}</Card.Text>
         </Card.Body>
       </Card>
