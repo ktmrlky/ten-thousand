@@ -1,5 +1,7 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, ListGroup, Modal } from "react-bootstrap";
+import ListGroupItemComponent from "./ListGroupItemComponent";
+import ModalFormComponent from "./ModalFormComponent";
 
 const ModalComponent = (props) => {
   return (
@@ -8,6 +10,7 @@ const ModalComponent = (props) => {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      scrollable
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
@@ -16,11 +19,20 @@ const ModalComponent = (props) => {
       </Modal.Header>
       <Modal.Body>
         <h4>Daily Activities</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
+        <p>You can add your daily activities below. </p>
+        <ModalFormComponent />
+        <hr className="my-4" />
+        <h5>Records</h5>
+        <ListGroup>
+          <ListGroupItemComponent />
+          <ListGroupItemComponent />
+          <ListGroupItemComponent />
+          <ListGroupItemComponent />
+          <ListGroupItemComponent />
+          <ListGroupItemComponent />
+          <ListGroupItemComponent />
+          <ListGroupItemComponent />
+        </ListGroup>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="outline-secondary" onClick={props.onHide}>
