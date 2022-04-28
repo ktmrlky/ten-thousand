@@ -1,9 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, ListGroup, Modal } from "react-bootstrap";
 import ListGroupItemComponent from "./ListGroupItemComponent";
 import ModalFormComponent from "./ModalFormComponent";
+import { v4 as uuidv4 } from "uuid";
 
 const ModalComponent = (props) => {
+  const [activity, setActivity] = useState({
+    id: uuidv4(),
+    activity: "",
+    hours: 0,
+  });
+  const [records, setRecords] = useState([]);
+
+  const handleChange = (event) => {
+    setActivity({ ...activity, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setRecords([...records, activity]);
+    setActivity({ id: uuidv4(), activity: "", hours: 0 });
+  };
+
+  const handleDelete = (id) => {
+    const newRecords = records.filter((record) => record.id !== id);
+    setRecords(newRecords);
+  };
+
   return (
     <Modal
       {...props}
@@ -20,19 +43,27 @@ const ModalComponent = (props) => {
       <Modal.Body>
         <h4>Daily Activities</h4>
         <p>You can add your daily activities below. </p>
-        <ModalFormComponent />
-        <hr className="my-4" />
-        <h5>Records</h5>
-        <ListGroup>
-          <ListGroupItemComponent />
-          <ListGroupItemComponent />
-          <ListGroupItemComponent />
-          <ListGroupItemComponent />
-          <ListGroupItemComponent />
-          <ListGroupItemComponent />
-          <ListGroupItemComponent />
-          <ListGroupItemComponent />
-        </ListGroup>
+        <ModalFormComponent
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          activity={activity}
+        />
+        {records.length > 0 && (
+          <>
+            <hr className="my-4" />
+            <h5>Records</h5>
+            <ListGroup>
+              {records.map((record, index) => (
+                <ListGroupItemComponent
+                  key={index}
+                  record={record}
+                  handleDelete={handleDelete}
+                  index={index}
+                />
+              ))}
+            </ListGroup>
+          </>
+        )}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="outline-secondary" onClick={props.onHide}>

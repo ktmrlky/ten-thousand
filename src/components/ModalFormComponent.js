@@ -1,25 +1,32 @@
 import React from "react";
 import { Button, Form, FormControl, InputGroup } from "react-bootstrap";
 
-const ModalFormComponent = () => {
+const ModalFormComponent = ({ handleChange, handleSubmit, activity }) => {
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <InputGroup className="mb-3">
         <FormControl
           className="mx-1"
           placeholder="Activity..."
           aria-label="Activity"
-          aria-describedby="basic-addon2"
           required
           type="text"
           size="lg"
+          name="activity"
+          value={activity.activity}
+          onChange={handleChange}
         />
         <FormControl
-          type="time"
+          type="number"
+          min={0}
+          max={24} //TODO Here we should make sure that the user can only enter a number between 0 and 24
           aria-label="Hours"
-          aria-describedby="basic-addon2"
+          placeholder="Hours"
           size="lg"
           required
+          name="hours"
+          value={activity.hours}
+          onChange={handleChange}
         />
         <Button
           type="submit"
