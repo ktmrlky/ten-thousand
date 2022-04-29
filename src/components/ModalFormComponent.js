@@ -18,7 +18,7 @@ const ModalFormComponent = ({ handleChange, handleSubmit, activity }) => {
         />
         <FormControl
           type="number"
-          min={0.1}
+          min={0}
           max={24} //TODO Here we should make sure that the user can only enter a number between 0 and 24
           aria-label="Hours"
           placeholder="Hours"
