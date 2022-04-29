@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import { monthNames } from "../constants/MonthNames";
+import { monthNames, dayNames } from "../constants/MonthNames";
 
 const CardComponentForTen = ({ day, modalControl }) => {
   const now = new Date();
@@ -18,7 +18,9 @@ const CardComponentForTen = ({ day, modalControl }) => {
         text={controlPoint ? "light" : "secondary"}
       >
         <Card.Body className="m-auto">
-          <Card.Title className="text-center">{date.getDate()}</Card.Title>
+          <Card.Title className="text-center">
+            {monthNames[date.getMonth()] + " " + date.getDate()}
+          </Card.Title>
           {controlPoint ? (
             <div className="video__icon">
               <div className="circle--outer"></div>
@@ -27,7 +29,9 @@ const CardComponentForTen = ({ day, modalControl }) => {
           ) : (
             ""
           )}
-          <Card.Text>{monthNames[date.getMonth()]}</Card.Text>
+          <Card.Text className="text-center">
+            {dayNames[date.getDay()]}
+          </Card.Text>
         </Card.Body>
       </Card>
     </div>
