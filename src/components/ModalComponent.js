@@ -10,6 +10,10 @@ import {
 import ListGroupItemComponent from "./ListGroupItemComponent";
 import ModalFormComponent from "./ModalFormComponent";
 import { v4 as uuidv4 } from "uuid";
+import {
+  useDailyComponent,
+  useDailyUpdateComponent,
+} from "../contexts/DailyActivityContext";
 
 const ModalComponent = (props) => {
   const [activity, setActivity] = useState({
@@ -18,7 +22,8 @@ const ModalComponent = (props) => {
     goal: "",
     hours: 0,
   });
-  const [records, setRecords] = useState([]);
+  const records = useDailyComponent().activities;
+  const handleRecord = useDailyUpdateComponent()[1];
 
   const handleChange = (event) => {
     setActivity({ ...activity, [event.target.name]: event.target.value });
@@ -26,13 +31,13 @@ const ModalComponent = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setRecords([...records, activity]);
+    handleRecord(activity);
     setActivity({ id: uuidv4(), activity: "", goal: "", hours: 0 });
   };
 
   const handleDelete = (id) => {
     const newRecords = records.filter((record) => record.id !== id);
-    setRecords(newRecords);
+    //setRecords(newRecords);
   };
 
   return (

@@ -6,10 +6,12 @@ import UpDouble from "../assets/UpDouble";
 import CardComponentForTen from "../components/CardComponentForTen";
 import ModalComponent from "../components/ModalComponent";
 import { monthNames } from "../constants/MonthNames";
+import { useDailyUpdateComponent } from "../contexts/DailyActivityContext";
 
 const Home = () => {
   const [modalShow, setModalShow] = useState(false);
   const [modalDayInformation, setModalDayInformation] = useState("");
+  const handleDate = useDailyUpdateComponent()[0];
 
   const now = 60;
   const progressInstance = (
@@ -30,7 +32,7 @@ const Home = () => {
       monthNames[day.getMonth()] +
       " " +
       day.getFullYear();
-
+    handleDate(formattedDay);
     setModalDayInformation(formattedDay);
 
     setModalShow((modalShow) => !modalShow);

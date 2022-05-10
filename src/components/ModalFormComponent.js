@@ -40,7 +40,7 @@ const ModalFormComponent = ({ handleChange, handleSubmit, activity }) => {
                   name="goal"
                   required
                 >
-                  <option disabled selected value="">
+                  <option disabled defaultValue="" value="">
                     Select Goal
                   </option>
                   <option value={goal.goal}>{goal.goal}</option>

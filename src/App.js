@@ -1,11 +1,14 @@
 import "./App.css";
+import { DailyProvider } from "./contexts/DailyActivityContext";
 import { GoalProvider } from "./contexts/GoalContext";
 import Home from "./pages/Home";
 
 function App() {
   return (
     <GoalProvider>
-      <Home />
+      <DailyProvider>
+        <Home />
+      </DailyProvider>
     </GoalProvider>
   );
 }
