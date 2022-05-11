@@ -58,9 +58,26 @@ export function DailyProvider(props) {
     }
   };
 
+  const handleDelete = (id) => {
+    const newRecords = dailyActivities.activities.filter(
+      (activity) => activity.id !== id
+    );
+    setDailyActivities({ ...dailyActivities, activities: newRecords });
+
+    const input = JSON.parse(localStorage.getItem("dailyActivities"));
+    const daily = input.find((obj) => obj.day === selectedDate);
+    if (daily) {
+      daily.activities = newRecords;
+      const final = input.map((obj) => (daily.day === obj.day ? daily : obj));
+      localStorage.setItem("dailyActivities", JSON.stringify(final));
+    }
+  };
+
   return (
     <DailyContext.Provider value={dailyActivities}>
-      <DailyUpdateContext.Provider value={[handleSelectedDate, handleActivity]}>
+      <DailyUpdateContext.Provider
+        value={[handleSelectedDate, handleActivity, handleDelete]}
+      >
         {props.children}
       </DailyUpdateContext.Provider>
     </DailyContext.Provider>

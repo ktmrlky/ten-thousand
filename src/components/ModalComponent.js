@@ -24,6 +24,7 @@ const ModalComponent = (props) => {
   });
   const records = useDailyComponent().activities;
   const handleRecord = useDailyUpdateComponent()[1];
+  const handleDelete = useDailyUpdateComponent()[2];
 
   const handleChange = (event) => {
     setActivity({ ...activity, [event.target.name]: event.target.value });
@@ -33,11 +34,6 @@ const ModalComponent = (props) => {
     event.preventDefault();
     handleRecord(activity);
     setActivity({ id: uuidv4(), activity: "", goal: "", hours: 0 });
-  };
-
-  const handleDelete = (id) => {
-    const newRecords = records.filter((record) => record.id !== id);
-    //setRecords(newRecords);
   };
 
   return (
