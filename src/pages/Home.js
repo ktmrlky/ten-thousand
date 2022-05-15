@@ -11,6 +11,7 @@ import { useDailyUpdateComponent } from "../contexts/DailyActivityContext";
 const Home = () => {
   const [modalShow, setModalShow] = useState(false);
   const [modalDayInformation, setModalDayInformation] = useState("");
+  const [tableDate, setTableDate] = useState({ firstPart: 9, secondPart: 1 });
   const handleDate = useDailyUpdateComponent()[0];
 
   const now = 60;
@@ -38,6 +39,25 @@ const Home = () => {
     setModalShow((modalShow) => !modalShow);
   };
 
+  const handleTableDate = (day, part) => {
+    switch (part) {
+      case "upButton":
+        setTableDate({
+          firstPart: tableDate.firstPart + day,
+          secondPart: tableDate.secondPart - day,
+        });
+        break;
+      case "downButton":
+        setTableDate({
+          firstPart: tableDate.firstPart - day,
+          secondPart: tableDate.secondPart + day,
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <Container>
       <Row className="justify-content-md-center mt-2 mb-1">
@@ -51,7 +71,12 @@ const Home = () => {
           <FormComponent />
           <Row>
             <Col>
-              <Button variant="outline-secondary" size="md" className="col-12">
+              <Button
+                variant="outline-secondary"
+                size="md"
+                className="col-12"
+                onClick={() => handleTableDate(4, "upButton")}
+              >
                 <UpDouble />
               </Button>
             </Col>
@@ -60,9 +85,12 @@ const Home = () => {
             {Array.from({ length: 10 }).map((_, idx) => (
               <Col
                 md={
-                  nowDate.getDate() === setDate(idx - 9).getDate() &&
-                  nowDate.getMonth() === setDate(idx - 9).getMonth() &&
-                  nowDate.getFullYear() === setDate(idx - 9).getFullYear()
+                  nowDate.getDate() ===
+                    setDate(idx - tableDate.firstPart).getDate() &&
+                  nowDate.getMonth() ===
+                    setDate(idx - tableDate.firstPart).getMonth() &&
+                  nowDate.getFullYear() ===
+                    setDate(idx - tableDate.firstPart).getFullYear()
                     ? 6
                     : 3
                 }
@@ -70,15 +98,28 @@ const Home = () => {
                 key={idx}
               >
                 <CardComponentForTen
-                  day={setDate(idx - 9)}
+                  day={setDate(idx - tableDate.firstPart)}
                   modalControl={handleModalClick}
                 />
               </Col>
             ))}
             {Array.from({ length: 9 }).map((_, idx) => (
-              <Col md={3} className="my-3" key={idx}>
+              <Col
+                md={
+                  nowDate.getDate() ===
+                    setDate(idx + tableDate.secondPart).getDate() &&
+                  nowDate.getMonth() ===
+                    setDate(idx + tableDate.secondPart).getMonth() &&
+                  nowDate.getFullYear() ===
+                    setDate(idx + tableDate.secondPart).getFullYear()
+                    ? 6
+                    : 3
+                }
+                className="my-3"
+                key={idx}
+              >
                 <CardComponentForTen
-                  day={setDate(idx + 1)}
+                  day={setDate(idx + tableDate.secondPart)}
                   modalControl={handleModalClick}
                 />
               </Col>
@@ -91,7 +132,12 @@ const Home = () => {
           </Row>
           <Row>
             <Col>
-              <Button variant="outline-secondary" size="md" className="col-12">
+              <Button
+                variant="outline-secondary"
+                size="md"
+                className="col-12"
+                onClick={() => handleTableDate(4, "downButton")}
+              >
                 <DownDouble />
               </Button>
             </Col>
