@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { VERSION } from "../constants/Version";
 
 const DailyContext = React.createContext();
 const DailyUpdateContext = React.createContext();
@@ -20,6 +21,12 @@ export function DailyProvider(props) {
 
   useEffect(() => {
     const input = JSON.parse(localStorage.getItem("dailyActivities"));
+    const version = JSON.parse(localStorage.getItem("version"));
+    if (!version) {
+      localStorage.setItem("version", JSON.stringify(VERSION));
+      localStorage.removeItem("dailyActivities");
+      localStorage.removeItem("goal");
+    }
     if (input) {
       const activities = input.find((obj) => obj.day === selectedDate);
       if (activities) {

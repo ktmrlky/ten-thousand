@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { monthNames, dayNames } from "../constants/MonthNames";
 
@@ -11,15 +11,24 @@ const CardComponentForTen = ({ day, modalControl }) => {
     monthNames[date.getMonth()] +
     " " +
     date.getFullYear();
+  const [controlPoint2, setControlPoint2] = useState(false);
   const input = JSON.parse(localStorage.getItem("dailyActivities"));
-  const daily = input.find((obj) => obj.day === dateRight);
 
   const controlPoint =
     date.getDate() === now.getDate() &&
     date.getMonth() === now.getMonth() &&
     date.getFullYear() === now.getFullYear();
 
-  const controlPoint2 = daily !== undefined && daily.activities.length > 0;
+  useEffect(() => {
+    if (input) {
+      const daily = input.find((obj) => obj.day === dateRight);
+      if (daily && daily.activities.length > 0) {
+        setControlPoint2(true);
+      } else {
+        setControlPoint2(false);
+      }
+    }
+  }, [input, dateRight]);
 
   return (
     <div onClick={() => modalControl(date)} style={{ cursor: "pointer" }}>
