@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const GoalContext = React.createContext();
 const GoalUpdateContext = React.createContext();
@@ -12,38 +12,43 @@ export function useGoalUpdateComponent() {
 }
 
 export function GoalProvider(props) {
-  const last = useRef(false);
+  const [control, setControl] = useState(false);
+  const [goalHelper, setGoalHelper] = useState("");
   const [goal, setGoal] = useState({
-    goal: "",
-    submitted: last.current,
+    goals: [],
   });
 
   useEffect(() => {
     const input = JSON.parse(localStorage.getItem("goal"));
     if (input) {
-      setGoal(input);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (goal.submitted) {
+      setGoal({ goals: input.goals });
+      setControl(false);
+    } else {
       localStorage.setItem("goal", JSON.stringify(goal));
     }
+
     // eslint-disable-next-line
-  }, [goal.submitted]);
+  }, [control]);
 
   const handleGoal = (e) => {
     e.preventDefault();
-    setGoal({ ...goal, goal: e.target.value });
+    setGoalHelper(e.target.value);
   };
 
   function handleSubmit(e) {
     e.preventDefault();
-    setGoal({ ...goal, submitted: true });
+    const goals = JSON.parse(localStorage.getItem("goal"));
+    if (goalHelper !== "") {
+      goals.goals.push(goalHelper);
+      localStorage.setItem("goal", JSON.stringify(goals));
+      setGoal({ goals: goals });
+      setControl(true);
+    }
+    setGoalHelper("");
   }
 
   return (
-    <GoalContext.Provider value={goal}>
+    <GoalContext.Provider value={[goal, goalHelper]}>
       <GoalUpdateContext.Provider value={[handleGoal, handleSubmit]}>
         {props.children}
       </GoalUpdateContext.Provider>

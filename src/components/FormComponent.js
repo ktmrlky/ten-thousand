@@ -6,7 +6,7 @@ import {
 } from "../contexts/GoalContext";
 
 const FormComponent = () => {
-  const aim = useGoalComponent();
+  const aim = useGoalComponent()[1];
   const handleGoal = useGoalUpdateComponent()[0];
   const handleSubmit = useGoalUpdateComponent()[1];
 
@@ -18,17 +18,11 @@ const FormComponent = () => {
           placeholder="Please write your 10.000 hours goal..."
           size="md"
           onChange={(e) => handleGoal(e)}
-          value={aim.goal}
-          disabled={aim.submitted === false ? false : true}
+          value={aim}
           aria-describedby="basic-addon2"
           required
         />
-        <Button
-          variant="outline-secondary"
-          id="button-addon2"
-          disabled={aim.submitted === false ? false : true}
-          type="submit"
-        >
+        <Button variant="outline-secondary" id="button-addon2" type="submit">
           Set
         </Button>
       </InputGroup>
