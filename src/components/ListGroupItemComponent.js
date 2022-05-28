@@ -22,7 +22,7 @@ const ListGroupItemComponent = ({ record, handleDelete }) => {
         </Col>
         <Col lg="1" className="my-2 d-grid ">
           <Button
-            onClick={(e) => handleDelete(record.id)}
+            onClick={(e) => handleDelete(record)}
             variant="outline-danger"
           >
             X

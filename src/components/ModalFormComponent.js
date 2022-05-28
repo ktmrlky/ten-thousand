@@ -12,7 +12,7 @@ import {
 import { useGoalComponent } from "../contexts/GoalContext";
 
 const ModalFormComponent = ({ handleChange, handleSubmit, activity }) => {
-  const goal = useGoalComponent()[0];
+  const goals = useGoalComponent()[0];
 
   return (
     <>
@@ -43,9 +43,9 @@ const ModalFormComponent = ({ handleChange, handleSubmit, activity }) => {
                   <option disabled defaultValue="" value="">
                     Select Goal
                   </option>
-                  {goal.goals.map((goal, index) => (
-                    <option key={index} value={goal}>
-                      {goal}
+                  {goals.map((goal, index) => (
+                    <option key={index} value={goal.goal}>
+                      {goal.goal}
                     </option>
                   ))}
                 </Form.Select>
@@ -80,7 +80,7 @@ const ModalFormComponent = ({ handleChange, handleSubmit, activity }) => {
           </Row>
         </InputGroup>
       </Form>
-      {goal.goals.length === 0 && (
+      {goals.length === 0 && (
         <Alert variant="danger">
           Please, set a target in <strong>main page</strong> to add activities.
         </Alert>

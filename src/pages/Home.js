@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Col,
-  Container,
-  Dropdown,
-  DropdownButton,
-  ProgressBar,
-  Row,
-} from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import FormComponent from "../components/FormComponent";
 import DownDouble from "../assets/DownDouble";
 import UpDouble from "../assets/UpDouble";
@@ -15,20 +7,13 @@ import CardComponentForTen from "../components/CardComponentForTen";
 import ModalComponent from "../components/ModalComponent";
 import { monthNames } from "../constants/MonthNames";
 import { useDailyUpdateComponent } from "../contexts/DailyActivityContext";
-import { useGoalComponent } from "../contexts/GoalContext";
+import LeftProgressBar from "../components/LeftProgressBar";
 
 const Home = () => {
   const [modalShow, setModalShow] = useState(false);
   const [modalDayInformation, setModalDayInformation] = useState("");
   const [tableDate, setTableDate] = useState({ firstPart: 9, secondPart: 1 });
   const handleDate = useDailyUpdateComponent()[0];
-  const goals = useGoalComponent()[0].goals;
-  const [activeGoal, setActiveGoal] = useState("Select Goal");
-
-  const now = 60;
-  const progressInstance = (
-    <ProgressBar now={now} label={`${now}%`} variant="secondary" animated />
-  );
 
   const nowDate = new Date();
   const setDate = (day) => {
@@ -73,31 +58,9 @@ const Home = () => {
     <Container>
       <Row className="justify-content-md-center mt-2 mb-1">
         <Col md={2} className="d-flex align-items-center">
-          {goals.length > 0 && (
-            <div className="sticky-xl-top sticky-lg-top sticky-md-top sticky-sm-top flex-fill my-4">
-              <h3>Progress</h3>
-              <DropdownButton
-                drop="end"
-                size="sm"
-                variant="light"
-                title={activeGoal}
-                className="mb-2"
-              >
-                {goals.map((goal, index) => (
-                  <Dropdown.Item
-                    eventKey={activeGoal}
-                    key={index}
-                    onClick={() => setActiveGoal(goal)}
-                  >
-                    {goal}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-              {activeGoal !== "Select Goal" && (
-                <span className="mt-3">{progressInstance}</span>
-              )}
-            </div>
-          )}
+          <div className="sticky-xl-top sticky-lg-top sticky-md-top sticky-sm-top flex-fill my-4">
+            <LeftProgressBar />
+          </div>
         </Col>
         <Col>
           <FormComponent />

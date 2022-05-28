@@ -75,3 +75,10 @@
     opacity: 0;
   }
 }
+
+.alert-generic {
+  position: absolute !important;
+  top: 4rem !important;
+  right: 1rem !important;
+  max-width: 500px !important;
+}

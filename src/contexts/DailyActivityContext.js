@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { VERSION } from "../constants/Version";
+import { useGoalUpdateComponent } from "./GoalContext";
 
 const DailyContext = React.createContext();
 const DailyUpdateContext = React.createContext();
@@ -19,13 +20,16 @@ export function DailyProvider(props) {
     activities: [],
   });
 
+  const handleGoalProgress = useGoalUpdateComponent()[2];
+
   useEffect(() => {
     const input = JSON.parse(localStorage.getItem("dailyActivities"));
     const version = JSON.parse(localStorage.getItem("version"));
     if (!version) {
       localStorage.setItem("version", JSON.stringify(VERSION));
       localStorage.removeItem("dailyActivities");
-      localStorage.removeItem("goal");
+      localStorage.removeItem("goal"); // Remove the goal from local storage using in older version
+      localStorage.removeItem("goals");
     }
     if (input) {
       const activities = input.find((obj) => obj.day === selectedDate);
@@ -63,11 +67,14 @@ export function DailyProvider(props) {
       input.push(finalDailyActivities);
       localStorage.setItem("dailyActivities", JSON.stringify(input));
     }
+
+    //Update goal progress
+    handleGoalProgress(activity, "add");
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (record) => {
     const newRecords = dailyActivities.activities.filter(
-      (activity) => activity.id !== id
+      (activity) => activity.id !== record.id
     );
     setDailyActivities({ ...dailyActivities, activities: newRecords });
 
@@ -78,6 +85,9 @@ export function DailyProvider(props) {
       const final = input.map((obj) => (daily.day === obj.day ? daily : obj));
       localStorage.setItem("dailyActivities", JSON.stringify(final));
     }
+
+    //Update goal progress
+    handleGoalProgress(record, "remove");
   };
 
   return (
