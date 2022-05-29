@@ -62,7 +62,7 @@ export function GoalProvider(props) {
     const goals = JSON.parse(localStorage.getItem("goals"));
     const goal = goals.find((obj) => obj.goal === activity.goal);
     if (goal) {
-      const activityRatio = (parseInt(activity.hours) / 10000) * 100;
+      const activityRatio = (parseFloat(activity.hours) / 10000) * 100;
       console.log(activityRatio);
       if (type === "add") {
         if (goal.goalProgress === 0) {

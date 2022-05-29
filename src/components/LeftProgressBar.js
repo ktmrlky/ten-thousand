@@ -17,7 +17,12 @@ const LeftProgressBar = () => {
   }, [goals, activeGoal]);
 
   const progressInstance = (
-    <ProgressBar now={now} label={`${now}%`} variant="secondary" animated />
+    <ProgressBar
+      now={now.toFixed(2)}
+      label={`${now.toFixed(2)}%`}
+      variant="secondary"
+      animated
+    />
   );
 
   const handleActiveGoal = (selectedGoal) => {
@@ -34,9 +39,9 @@ const LeftProgressBar = () => {
     <>
       <DropdownButton
         drop="end"
-        size="sm"
+        size="lg"
         variant="light"
-        title={activeGoal}
+        title="Progress"
         className="mb-2"
       >
         {goals.map((goal, index) => (
@@ -51,8 +56,13 @@ const LeftProgressBar = () => {
       </DropdownButton>
       {activeGoal !== "Select Goal" && (
         <>
-          <h3>Progress ({now.toFixed(2)})</h3>
-          <span className="mt-3">{progressInstance}</span>
+          <span className="mt-1">{progressInstance}</span>
+          <p>
+            {activeGoal.length > 15
+              ? activeGoal.slice(0, 15) + "..."
+              : activeGoal}{" "}
+            {now.toFixed(2)}%
+          </p>
         </>
       )}
     </>
