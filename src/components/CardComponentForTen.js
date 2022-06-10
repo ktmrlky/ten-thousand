@@ -30,11 +30,17 @@ const CardComponentForTen = ({ day, modalControl }) => {
     }
   }, [input, dateRight]);
 
+  const successStyle = {
+    backgroundColor: "#deebdd",
+    backgroundImage: "linear-gradient(315deg, #deebdd 0%, #bbdbbe 74%)",
+  };
+
   return (
     <div onClick={() => modalControl(date)} style={{ cursor: "pointer" }}>
       <Card
         bg={controlPoint2 ? "success" : controlPoint ? "secondary" : "light"}
         text={controlPoint2 ? "light" : controlPoint ? "light" : "secondary"}
+        className="shadow"
       >
         <Card.Body className="m-auto">
           <Card.Title className="text-center">

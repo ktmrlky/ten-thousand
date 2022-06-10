@@ -82,3 +82,18 @@
   right: 1rem !important;
   max-width: 500px !important;
 }
+
+.bg-success {
+  background-color: #bbe292 !important;
+  background-image: linear-gradient(50deg, #bbe292 0%, #40b2a7 90%) !important;
+}
+
+.bg-light {
+  background-color: #f7efef !important;
+  background-image: linear-gradient(60deg, #f9f9f9 20%, #ffffff 60%) !important;
+}
+
+.bg-secondary {
+  background-color: #828ea2 !important;
+  background-image: linear-gradient(60deg, #828ea2 50%, #828ea2 99%) !important;
+}
