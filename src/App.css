@@ -4,6 +4,20 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+.app-center {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 100vh !important;
+  width: auto;
+}
+
+.toast-container {
+  max-width: 300px !important;
+  z-index: 99999;
+}
+
 .video__icon {
   position: absolute;
   width: 50px;

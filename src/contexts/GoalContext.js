@@ -63,7 +63,6 @@ export function GoalProvider(props) {
     const goal = goals.find((obj) => obj.goal === activity.goal);
     if (goal) {
       const activityRatio = (parseFloat(activity.hours) / 10000) * 100;
-      console.log(activityRatio);
       if (type === "add") {
         if (goal.goalProgress === 0) {
           goal.goalProgress = activityRatio;

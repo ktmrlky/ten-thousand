@@ -14,6 +14,7 @@ const Home = () => {
   const [modalDayInformation, setModalDayInformation] = useState("");
   const [tableDate, setTableDate] = useState({ firstPart: 9, secondPart: 1 });
   const handleDate = useDailyUpdateComponent()[0];
+  const [controlToday, setControlToday] = useState(0);
 
   const nowDate = new Date();
   const setDate = (day) => {
@@ -42,12 +43,14 @@ const Home = () => {
           firstPart: tableDate.firstPart + day,
           secondPart: tableDate.secondPart - day,
         });
+        setControlToday(controlToday + 1);
         break;
       case "downButton":
         setTableDate({
           firstPart: tableDate.firstPart - day,
           secondPart: tableDate.secondPart + day,
         });
+        setControlToday(controlToday - 1);
         break;
       default:
         break;
@@ -56,9 +59,9 @@ const Home = () => {
 
   return (
     <Container>
-      <Row className="justify-content-md-center mt-2 mb-1">
+      <Row className="justify-content-md-center mt-2 mb-1 app-center">
         <Col md={2} className="d-flex align-items-center">
-          <div className="sticky-xl-top sticky-lg-top sticky-md-top sticky-sm-top flex-fill my-4">
+          <div className="sticky-xl-top sticky-lg-top sticky-md-top sticky-sm-top flex-fill mt-3 mb-2">
             <LeftProgressBar />
           </div>
         </Col>
@@ -98,7 +101,9 @@ const Home = () => {
                 />
               </Col>
             ))}
-            {Array.from({ length: 9 }).map((_, idx) => (
+            {Array.from({
+              length: controlToday > 2 || controlToday < -2 ? 10 : 9,
+            }).map((_, idx) => (
               <Col
                 md={
                   nowDate.getDate() ===
@@ -130,7 +135,7 @@ const Home = () => {
               <Button
                 variant="outline-secondary"
                 size="md"
-                className="col-12"
+                className="col-12 mb-3"
                 onClick={() => handleTableDate(4, "downButton")}
               >
                 <DownDouble />
