@@ -8,13 +8,44 @@ import ModalComponent from "../components/ModalComponent";
 import { monthNames } from "../constants/MonthNames";
 import { useDailyUpdateComponent } from "../contexts/DailyActivityContext";
 import LeftProgressBar from "../components/LeftProgressBar";
+import { useEffect } from "react";
 
 const Home = () => {
   const [modalShow, setModalShow] = useState(false);
   const [modalDayInformation, setModalDayInformation] = useState("");
-  const [tableDate, setTableDate] = useState({ firstPart: 9, secondPart: 1 });
+  const [screenWidth, setScreenWidth] = useState(0);
+
+  const [tableDate, setTableDate] = useState({
+    firstPart: 9,
+    secondPart: 1,
+  });
   const handleDate = useDailyUpdateComponent()[0];
   const [controlToday, setControlToday] = useState(0);
+
+  useEffect(() => {
+    function handleResize() {
+      setScreenWidth(window.innerWidth);
+      if (window.innerWidth < 768) {
+        setTableDate({
+          firstPart: 2,
+          secondPart: 1,
+        });
+      } else {
+        setTableDate({
+          firstPart: 9,
+          secondPart: 1,
+        });
+      }
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [setScreenWidth]);
 
   const nowDate = new Date();
   const setDate = (day) => {
@@ -43,14 +74,14 @@ const Home = () => {
           firstPart: tableDate.firstPart + day,
           secondPart: tableDate.secondPart - day,
         });
-        setControlToday(controlToday + 1);
+        screenWidth > 768 && setControlToday(controlToday + 1);
         break;
       case "downButton":
         setTableDate({
           firstPart: tableDate.firstPart - day,
           secondPart: tableDate.secondPart + day,
         });
-        setControlToday(controlToday - 1);
+        screenWidth > 768 && setControlToday(controlToday - 1);
         break;
       default:
         break;
@@ -73,36 +104,45 @@ const Home = () => {
                 variant="outline-secondary"
                 size="md"
                 className="col-12"
-                onClick={() => handleTableDate(4, "upButton")}
+                onClick={() =>
+                  handleTableDate(screenWidth < 769 ? 1 : 4, "upButton")
+                }
               >
                 <UpDouble />
               </Button>
             </Col>
           </Row>
           <Row>
-            {Array.from({ length: 10 }).map((_, idx) => (
-              <Col
-                md={
-                  nowDate.getDate() ===
-                    setDate(idx - tableDate.firstPart).getDate() &&
-                  nowDate.getMonth() ===
-                    setDate(idx - tableDate.firstPart).getMonth() &&
-                  nowDate.getFullYear() ===
-                    setDate(idx - tableDate.firstPart).getFullYear()
-                    ? 6
-                    : 3
-                }
-                className="my-3"
-                key={idx}
-              >
-                <CardComponentForTen
-                  day={setDate(idx - tableDate.firstPart)}
-                  modalControl={handleModalClick}
-                />
-              </Col>
-            ))}
+            {Array.from({ length: screenWidth < 769 ? 3 : 10 }).map(
+              (_, idx) => (
+                <Col
+                  md={
+                    nowDate.getDate() ===
+                      setDate(idx - tableDate.firstPart).getDate() &&
+                    nowDate.getMonth() ===
+                      setDate(idx - tableDate.firstPart).getMonth() &&
+                    nowDate.getFullYear() ===
+                      setDate(idx - tableDate.firstPart).getFullYear()
+                      ? 6
+                      : 3
+                  }
+                  className="my-3"
+                  key={idx}
+                >
+                  <CardComponentForTen
+                    day={setDate(idx - tableDate.firstPart)}
+                    modalControl={handleModalClick}
+                  />
+                </Col>
+              )
+            )}
             {Array.from({
-              length: controlToday > 2 || controlToday < -2 ? 10 : 9,
+              length:
+                screenWidth < 769
+                  ? 2
+                  : controlToday > 2 || controlToday < -2
+                  ? 10
+                  : 9,
             }).map((_, idx) => (
               <Col
                 md={
@@ -136,7 +176,9 @@ const Home = () => {
                 variant="outline-secondary"
                 size="md"
                 className="col-12 mb-3"
-                onClick={() => handleTableDate(4, "downButton")}
+                onClick={() =>
+                  handleTableDate(screenWidth < 769 ? 1 : 4, "downButton")
+                }
               >
                 <DownDouble />
               </Button>
